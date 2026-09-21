@@ -3236,7 +3236,7 @@ function fetchCampanhaCrescimento(b, allBlocks, ini, fim, totalAtual){
 }
 function appendCampanhasOverview(p){
   var mes = FILTER.start.slice(0,7);
-  var blocks = ((STATE.campanhasPorMes||{})[mes]||[]).filter(function(b){ return b.locked; });
+  var blocks = ((STATE.campanhasPorMes||{})[mes]||[]).filter(function(b){ return b.locked && !b.oculta; });
   if(!blocks.length) return;
 
   var loadingMsg=document.createElement('p'); loadingMsg.className='section-sub'; loadingMsg.style.textAlign='center'; loadingMsg.textContent='Buscando resultado das campanhas no Arius…';
