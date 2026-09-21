@@ -2582,7 +2582,7 @@ function appendOverviewMetaDeptTables(p){
   }
   add('Metas de vendas por departamentos - período '+fd(FILTER.start)+' a '+fd(FILTER.end)+' - consolidado',datesInRange(FILTER.start,FILTER.end));
   function addClosingProjection(referenceDate){
-    var ref=new Date(referenceDate+'T12:00:00'),year=ref.getFullYear(),month=ref.getMonth(),last=new Date(year,month+1,0,12),sellingDays=0,cursor=new Date(ref);
+    var ref=new Date(referenceDate+'T12:00:00'),year=ref.getFullYear(),month=ref.getMonth(),last=new Date(year,month+1,0,12),sellingDays=0,cursor=new Date(ref);var hojeD=new Date();hojeD.setHours(12,0,0,0);if(hojeD>cursor)cursor=new Date(hojeD);
     cursor.setDate(cursor.getDate()+1);while(cursor<=last){if(cursor.getDay()!==0)sellingDays++;cursor.setDate(cursor.getDate()+1);}
     var monthStart=referenceDate.slice(0,7)+'-01',monthDays=datesInRange(monthStart,referenceDate);var goals=stores.map(function(k){return metaMensalLoja(k,referenceDate.slice(0,7));});
     var remaining=stores.map(function(k,i){var sold=monthDays.reduce(function(a,d){var row=((SALES.dailyStore[k]||{})[d])||{};return a+Number(row.venda||0);},0);return goals[i]-sold;});
