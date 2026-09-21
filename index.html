@@ -4749,6 +4749,17 @@ function initRefreshButton(){
   var btn = document.getElementById('btn-refresh-data');
   if(!btn) return;
   var prevTitle = btn.title;
+  // Pagina publicada (GitHub Pages, estatica): nao existe servidor pra POST
+  // /api/refresh (dava HTTP 405). A atualizacao real roda no PC a cada 5 min e
+  // publica sozinha -- aqui o botao so busca a versao publicada mais recente.
+  if(!isLocalServerContext()){
+    btn.title = 'Buscar dados publicados mais recentes';
+    btn.addEventListener('click', function(){
+      btn.disabled = true; btn.classList.add('spinning'); btn.title = 'Buscando dados publicados…';
+      location.replace(location.pathname + '?_=' + Date.now());
+    });
+    return;
+  }
   btn.addEventListener('click', function(){
     btn.disabled = true;
     btn.classList.add('spinning');
