@@ -2584,7 +2584,7 @@ function appendOverviewMetaDeptTables(p){
   function addClosingProjection(referenceDate){
     var ref=new Date(referenceDate+'T12:00:00'),year=ref.getFullYear(),month=ref.getMonth(),last=new Date(year,month+1,0,12),sellingDays=0,cursor=new Date(ref);
     cursor.setDate(cursor.getDate()+1);while(cursor<=last){if(cursor.getDay()!==0)sellingDays++;cursor.setDate(cursor.getDate()+1);}
-    var monthStart=referenceDate.slice(0,7)+'-01',monthDays=datesInRange(monthStart,referenceDate),goals=[950000,1200000,1020000,760000,1050000,520000];
+    var monthStart=referenceDate.slice(0,7)+'-01',monthDays=datesInRange(monthStart,referenceDate);var goals=stores.map(function(k){return metaMensalLoja(k,referenceDate.slice(0,7));});
     var remaining=stores.map(function(k,i){var sold=monthDays.reduce(function(a,d){var row=((SALES.dailyStore[k]||{})[d])||{};return a+Number(row.venda||0);},0);return goals[i]-sold;});
     var block=document.createElement('div');block.className='edit-block';block.style.cssText='padding:0;overflow:hidden;margin:0;min-width:0;';
     var ht=document.createElement('h1');ht.style.cssText='margin:0;padding:9px 7px;text-align:center;background:#f7bd00;color:#17120d;font:800 .76rem Inter,sans-serif;text-transform:uppercase;';ht.textContent='Quanto falta? Para total do mês';block.appendChild(ht);
